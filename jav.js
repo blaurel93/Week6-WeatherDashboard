@@ -1,5 +1,9 @@
 $(document).ready(function () {
 
+
+
+
+
     function theSearch() {
         var city = $("#searchBar").val();
         var request = new XMLHttpRequest()
@@ -13,8 +17,7 @@ $(document).ready(function () {
                 var temp3 = (res.list[3].main.temp + '°F');
                 var temp4 = (res.list[3].main.temp + '°F');
                 var temp5 = (res.list[3].main.temp + '°F');
-
-
+                // appendTest();
                 var humid1 = ('Humidity ' + res.list[3].main.humidity + '%');
                 var humid2 = ('Humidity ' + res.list[11].main.humidity + '%');
                 var humid3 = ('Humidity ' + res.list[19].main.humidity + '%');
@@ -32,6 +35,13 @@ $(document).ready(function () {
                 console.log(temp1);
                 console.log(humid1);
                 console.log(wind1);
+                // function appendTest() {
+                //     var newTable1 = res.list[3].main.temp + '°F';
+                //     $("#appendHere").innerText = newTable1.toString;
+                //     console.log('Worked just cant see it')
+                // }
+
+
 
                 console.log(res.list[11]);
                 console.log(temp2);
@@ -61,6 +71,7 @@ $(document).ready(function () {
         request.send()
 
     }
+
 
     ////// THE ON CLICK OR ENTER BUTTON FUNCTIONS  /////
     ////////                               //////

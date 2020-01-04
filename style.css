@@ -28,9 +28,61 @@
     background: white;
     margin-top: 10px;
     border-radius: 20px;
- 
+    float: left;
 }
 .srchBtn:hover {
     background: black;
     color: white;
+}
+.searchHistory {
+    background-color: grey;
+    width: 19%;
+    height: 250px;
+    float: left;
+    clear:both;
+    margin-top: 20px;
+}
+.sizeButton {
+    width: 100%;
+}
+.holder {
+    background-color: black;
+    width: 80%;
+    height: 250px;
+    margin-top: 20px;
+    float: right;
+}
+.weatherBox {
+    background: blue;
+    width: 20%;
+    height: 100%;
+}
+.changeMeDate {
+    color: white;
+    font-size: 12px;
+    font-family: 'Josefin Sans', sans-serif;
+}
+.changeMe1 {
+    color: white;
+    font-size: 12px;
+    font-family: 'Josefin Sans', sans-serif;
+}
+.imgChange {
+    height: 50px;
+    width: 50px;
+}
+#appendHere {
+    float:left;
+}
+#appendHere1 {
+    float:left;
+}
+#appendHere2 {
+    float:left;
+}
+#appendHere3 {
+    float:left;
+}
+#appendHere4 {
+    float:left;
 }

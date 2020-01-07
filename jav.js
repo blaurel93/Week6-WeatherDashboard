@@ -1,7 +1,55 @@
 $(document).ready(function () {
-$(".weatherBox").hide();
+    $(".weatherBox").hide();
+    $("#history").hide();
+    $("#currentDisplay").hide();
+
+    function currentSearch() {
+        var city = $("#searchBar").val();
+        var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=44c38455c07369969dfcf31cc60c6f41&units=imperial";
+        $.ajax({
+            url: queryURL,
+            method: "GET"
+        }).then(function (res) {
+            console.log(res.city.coord.lon)
+            console.log(res.city.coord.lat)
+
+            var lon = (res.city.coord.lon);
+            var lat = (res.city.coord.lat);
+            var queryURL = "http://api.openweathermap.org/data/2.5/uvi?appid=44c38455c07369969dfcf31cc60c6f41&lat=" + lat + "&lon=" + lon;
+            $.ajax({
+                url: queryURL,
+                method: "GET"
+            }).then(function (response) {
+                console.log(response.value);
+                console.log(res);
+
+                var city = (res.city.name);
+                // var date1 = (res.list[5].dt_txt).split("-").join("/");
+                var temp1 = (res.list[5].main.temp_max + ' °F');
+                var humid1 = ('Humidity ' + res.list[5].main.humidity + ' %');
+                var wind1 = ('Wind Speed ' + res.list[5].wind.speed + ' Mph')
+                var icon1 = res.list[6].weather[0].icon;
+                var uv1 = (response.value);
+                var weatherIcon1 = "http://openweathermap.org/img/wn/" + icon1 + "@2x.png"
 
 
+
+                function appendCurrent() {
+                    $("#currentDisplay").empty();
+
+                    $("#currentDisplay").append("<h1 class='currentDate'>" + "Today : " + city + "</h1>");
+                    $("#currentDisplay").append("<img class='currentImg' src='" + weatherIcon1 + "'>");
+                    $("#currentDisplay").append("<p class='currentTemp'>" + "Current Temperature : " + temp1 + "</p>");
+                    $("#currentDisplay").append("<p class='currentHumid'>" + "Current Humidity : " + humid1 + "</p>");
+                    $("#currentDisplay").append("<p class='currentWind'>" + "Current Wind Speed : " + wind1 + "</p>");
+                    $("#currentDisplay").append("<p class='currentUv'>" + "UV Index : " + uv1 + "</p>");
+                }
+                appendCurrent();
+            })
+        });
+
+
+    }
 
 
     function theSearch() {
@@ -10,139 +58,109 @@ $(".weatherBox").hide();
         $.ajax({
             url: queryURL,
             method: "GET"
-        }).then(function(res) {
-            // var tempDay1 = [res.list[3].main.temp + '°F',
-                // res.list[4].main.temp + '°F',
-                // res.list[5].main.temp + '°F',
-                // res.list[6].main.temp + '°F',
-                // res.list[7].main.temp + '°F',
-                // res.list[8].main.temp + '°F',
-                // res.list[9].main.temp + '°F',
-                // res.list[10].main.temp + '°F',
-                // ];
-                var date1 = (res.list[3].dt_txt);
-                var date2 = (res.list[11].dt_txt);
-                var date3 = (res.list[19].dt_txt);
-                var date4 = (res.list[27].dt_txt);
-                var date5 = (res.list[35].dt_txt);
+        }).then(function (res) {
 
-                var temp1 = (res.list[3].main.temp_max + '°F');
-                var temp2 = (res.list[11].main.temp_max + '°F');
-                var temp3 = (res.list[19].main.temp_max + '°F');
-                var temp4 = (res.list[27].main.temp_max + '°F');
-                var temp5 = (res.list[35].main.temp_max + '°F');
-                
-                var humid1 = ('Humidity ' + res.list[3].main.humidity + '%');
-                var humid2 = ('Humidity ' + res.list[11].main.humidity + '%');
-                var humid3 = ('Humidity ' + res.list[19].main.humidity + '%');
-                var humid4 = ('Humidity ' + res.list[27].main.humidity + '%');
-                var humid5 = ('Humidity ' + res.list[35].main.humidity + '%');
+            var date1 = (res.list[5].dt_txt).split("-").join("/");
+            var date2 = (res.list[13].dt_txt).split("-").join("/");
+            var date3 = (res.list[21].dt_txt).split("-").join("/");
+            var date4 = (res.list[29].dt_txt).split("-").join("/");
+            var date5 = (res.list[37].dt_txt).split("-").join("/");
 
-                var wind1 = ('Wind Speed ' + res.list[3].wind.speed + 'Mph')
-                var wind2 = ('Wind Speed ' + res.list[11].wind.speed + 'Mph')
-                var wind3 = ('Wind Speed ' + res.list[19].wind.speed + 'Mph')
-                var wind4 = ('Wind Speed ' + res.list[27].wind.speed + 'Mph')
-                var wind5 = ('Wind Speed ' + res.list[35].wind.speed + 'Mph')
-                // var windSpeed = (res.wind.speed);
-                // console.log(tempDay1);
-                
-                // console.log(temp2);
-                // console.log(temp3);
-                // console.log(temp4);
-                // console.log(temp5);
-                console.log(res);
-                console.log(res.list[3]);
-                console.log(date1);
-                console.log(temp1);
-                console.log(humid1);
-                console.log(wind1);
-                
-                function appendTest() {
-                    // var newTable1 = res.list[3].main.temp + '°F';
-                    // $("#appendHere").append = newTable1.toString;
-                    $("#appendHere").append("<h1 class='changeMeDate'>" + date1 + "</h1>");
-                    $("#appendHere").append("<img class='imgChange' src='https://cdn2.iconfinder.com/data/icons/unisketch-multimedia-vol-1/60/020_009_brightness_low_small_sun-512.png'>");
+            var temp1 = (res.list[5].main.temp_max + '°F');
+            var temp2 = (res.list[13].main.temp_max + '°F');
+            var temp3 = (res.list[21].main.temp_max + '°F');
+            var temp4 = (res.list[29].main.temp_max + '°F');
+            var temp5 = (res.list[37].main.temp_max + '°F');
 
-                    $("#appendHere").append("<p class='changeMe1'>" + temp1 + "</p>");
-                    $("#appendHere").append("<p class='changeMe1'>" + humid1 + "</p>");
-                    $("#appendHere").append("<p class='changeMe1'>" + wind1 + "</p>");
-                    // console.log('Worked just cant see it')
-                }
-                function appendTest1() {
-                    // var newTable1 = res.list[3].main.temp + '°F';
-                    // $("#appendHere").append = newTable1.toString;
-                    $("#appendHere1").append("<h1 class='changeMeDate'>" + date2 + "</h1>");
-                    $("#appendHere1").append("<img class='imgChange' src='https://cdn2.iconfinder.com/data/icons/unisketch-multimedia-vol-1/60/020_009_brightness_low_small_sun-512.png'>");
+            var humid1 = ('Humidity ' + res.list[5].main.humidity + '%');
+            var humid2 = ('Humidity ' + res.list[13].main.humidity + '%');
+            var humid3 = ('Humidity ' + res.list[21].main.humidity + '%');
+            var humid4 = ('Humidity ' + res.list[29].main.humidity + '%');
+            var humid5 = ('Humidity ' + res.list[37].main.humidity + '%');
 
-                    $("#appendHere1").append("<p class='changeMe1'>" + temp2 + "</p>");
-                    $("#appendHere1").append("<p class='changeMe1'>" + humid2 + "</p>");
-                    $("#appendHere1").append("<p class='changeMe1'>" + wind2 + "</p>");
-                    
-                }
-                function appendTest2() {
-                    // var newTable1 = res.list[3].main.temp + '°F';
-                    // $("#appendHere").append = newTable1.toString;
-                    $("#appendHere2").append("<h1 class='changeMeDate'>" + date3 + "</h1>");
-                    $("#appendHere2").append("<img class='imgChange' src='https://cdn2.iconfinder.com/data/icons/unisketch-multimedia-vol-1/60/020_009_brightness_low_small_sun-512.png'>");
+            var wind1 = ('Wind Speed ' + res.list[5].wind.speed + 'Mph')
+            var wind2 = ('Wind Speed ' + res.list[13].wind.speed + 'Mph')
+            var wind3 = ('Wind Speed ' + res.list[21].wind.speed + 'Mph')
+            var wind4 = ('Wind Speed ' + res.list[29].wind.speed + 'Mph')
+            var wind5 = ('Wind Speed ' + res.list[37].wind.speed + 'Mph')
+            // var windSpeed = (res.wind.speed);
+            // console.log(tempDay1);
+            var icon1 = res.list[6].weather[0].icon;
+            var icon2 = res.list[14].weather[0].icon;
+            var icon3 = res.list[22].weather[0].icon;
+            var icon4 = res.list[30].weather[0].icon;
+            var icon5 = res.list[38].weather[0].icon;
 
-                    $("#appendHere2").append("<p class='changeMe1'>" + temp3 + "</p>");
-                    $("#appendHere2").append("<p class='changeMe1'>" + humid3 + "</p>");
-                    $("#appendHere2").append("<p class='changeMe1'>" + wind3 + "</p>");
-                    
-                }
-                function appendTest3() {
-                    // var newTable1 = res.list[3].main.temp + '°F';
-                    // $("#appendHere").append = newTable1.toString;
-                    $("#appendHere3").append("<h1 class='changeMeDate'>" + date4 + "</h1>");
-                    $("#appendHere3").append("<img class='imgChange' src='https://cdn2.iconfinder.com/data/icons/unisketch-multimedia-vol-1/60/020_009_brightness_low_small_sun-512.png'>");
+            var weatherIcon1 = "http://openweathermap.org/img/wn/" + icon1 + "@2x.png"
+            var weatherIcon2 = "http://openweathermap.org/img/wn/" + icon2 + "@2x.png"
+            var weatherIcon3 = "http://openweathermap.org/img/wn/" + icon3 + "@2x.png"
+            var weatherIcon4 = "http://openweathermap.org/img/wn/" + icon4 + "@2x.png"
+            var weatherIcon5 = "http://openweathermap.org/img/wn/" + icon5 + "@2x.png"
 
-                    $("#appendHere3").append("<p class='changeMe1'>" + temp4 + "</p>");
-                    $("#appendHere3").append("<p class='changeMe1'>" + humid4 + "</p>");
-                    $("#appendHere3").append("<p class='changeMe1'>" + wind4 + "</p>");
-                    
-                }
-                function appendTest4() {
-                    // var newTable1 = res.list[3].main.temp + '°F';
-                    // $("#appendHere").append = newTable1.toString;
-                    $("#appendHere4").append("<h1 class='changeMeDate'>" + date5 + "</h1>");
-                    $("#appendHere4").append("<img class='imgChange' src='https://cdn2.iconfinder.com/data/icons/unisketch-multimedia-vol-1/60/020_009_brightness_low_small_sun-512.png'>");
 
-                    $("#appendHere4").append("<p class='changeMe1'>" + temp5 + "</p>");
-                    $("#appendHere4").append("<p class='changeMe1'>" + humid5 + "</p>");
-                    $("#appendHere4").append("<p class='changeMe1'>" + wind5 + "</p>");
-                    
-                }
-                var search = $('#searchBar').val();
-                function appendSearch() {
-                    $(".searchHistory").append("<button class='sizeButton'>" + search + "</button>")
-                }
-                // console.log(res.list[11]);
-                // console.log(temp2);
-                // console.log(humid2);
-                // console.log(wind2);
+            console.log(res);
 
-                // console.log(res.list[19]);
-                // console.log(temp3);
-                // console.log(humid3);
-                // console.log(wind3);
 
-                // console.log(res.list[27]);
-                // console.log(temp4);
-                // console.log(humid4);
-                // console.log(wind4);
+            function appendTest() {
+                $("#appendHere").empty();
 
-                // console.log(res.list[35]);
-                // console.log(temp5);
-                // console.log(humid5);
-                // console.log(wind5);
-                appendTest();
-                appendTest1();
-                appendTest2();
-                appendTest3();
-                appendTest4();
-                appendSearch();
+                $("#appendHere").append("<h1 class='changeMeDate'>" + date1 + "</h1>");
+                $("#appendHere").append("<img class='imgChange' src='" + weatherIcon1 + "'>");
+                $("#appendHere").append("<p class='changeMe1'>" + temp1 + "</p>");
+                $("#appendHere").append("<p class='changeMe1'>" + humid1 + "</p>");
+                $("#appendHere").append("<p class='changeMe1'>" + wind1 + "</p>");
+            }
+            function appendTest1() {
+                $("#appendHere1").empty();
+
+                $("#appendHere1").append("<h1 class='changeMeDate'>" + date2 + "</h1>");
+                $("#appendHere1").append("<img class='imgChange' src='" + weatherIcon2 + "'>");
+                $("#appendHere1").append("<p class='changeMe1'>" + temp2 + "</p>");
+                $("#appendHere1").append("<p class='changeMe1'>" + humid2 + "</p>");
+                $("#appendHere1").append("<p class='changeMe1'>" + wind2 + "</p>");
+
+            }
+            function appendTest2() {
+                $("#appendHere2").empty();
+
+                $("#appendHere2").append("<h1 class='changeMeDate'>" + date3 + "</h1>");
+                $("#appendHere2").append("<img class='imgChange' src='" + weatherIcon3 + "'>");
+                $("#appendHere2").append("<p class='changeMe1'>" + temp3 + "</p>");
+                $("#appendHere2").append("<p class='changeMe1'>" + humid3 + "</p>");
+                $("#appendHere2").append("<p class='changeMe1'>" + wind3 + "</p>");
+
+            }
+            function appendTest3() {
+                $("#appendHere3").empty();
+
+                $("#appendHere3").append("<h1 class='changeMeDate'>" + date4 + "</h1>");
+                $("#appendHere3").append("<img class='imgChange' src='" + weatherIcon4 + "'>");
+                $("#appendHere3").append("<p class='changeMe1'>" + temp4 + "</p>");
+                $("#appendHere3").append("<p class='changeMe1'>" + humid4 + "</p>");
+                $("#appendHere3").append("<p class='changeMe1'>" + wind4 + "</p>");
+
+            }
+            function appendTest4() {
+                $("#appendHere4").empty();
+
+                $("#appendHere4").append("<h1 class='changeMeDate'>" + date5 + "</h1>");
+                $("#appendHere4").append("<img class='imgChange' src='" + weatherIcon5 + "'>");
+                $("#appendHere4").append("<p class='changeMe1'>" + temp5 + "</p>");
+                $("#appendHere4").append("<p class='changeMe1'>" + humid5 + "</p>");
+                $("#appendHere4").append("<p class='changeMe1'>" + wind5 + "</p>");
+
+            }
+
+
+            appendTest();
+            appendTest1();
+            appendTest2();
+            appendTest3();
+            appendTest4();
+
+
         });
-    };   
+    };
 
 
     ////// THE ON CLICK OR ENTER BUTTON FUNCTIONS  /////
@@ -155,7 +173,17 @@ $(".weatherBox").hide();
         if (e.keyCode == 13) {
             $(this).trigger("enterKey");
             theSearch();
+            currentSearch();
+            var search = $('#searchBar').val();
+            function appendSearch() {
+
+                $(".searchHistory").append("<button class='sizeButton'>" + search + "</button>")
+            }
+            appendSearch();
             $(".weatherBox").show();
+            $("#history").show();
+            $("#currentDisplay").show();
+            localStorage.setItem('saved', search)
         }
     });
 
@@ -163,14 +191,174 @@ $(".weatherBox").hide();
     $("#srchBtn").on('click', function () {
         console.log('You clicked the submit button')
         theSearch();
+        currentSearch();
+        var search = $('#searchBar').val();
+        function appendSearch() {
+
+            $(".searchHistory").append("<button class='sizeButton'>" + search + "</button>")
+        }
+        appendSearch();
         $(".weatherBox").show();
+        $("#history").show();
+        $("#currentDisplay").show();
+        localStorage.setItem('saved', search)
     });
+
+    $(document).on('click', '.sizeButton', function () {
+        var cityBtn = $(this).text();
+        console.log(cityBtn);
+        var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityBtn + "&appid=44c38455c07369969dfcf31cc60c6f41&units=imperial";
+        $.ajax({
+            url: queryURL,
+            method: "GET"
+        }).then(function (res) {
+            var date1 = (res.list[5].dt_txt).split("-").join("/");
+            var date2 = (res.list[13].dt_txt).split("-").join("/");
+            var date3 = (res.list[21].dt_txt).split("-").join("/");
+            var date4 = (res.list[29].dt_txt).split("-").join("/");
+            var date5 = (res.list[37].dt_txt).split("-").join("/");
+
+            var temp1 = (res.list[5].main.temp_max + '°F');
+            var temp2 = (res.list[13].main.temp_max + '°F');
+            var temp3 = (res.list[21].main.temp_max + '°F');
+            var temp4 = (res.list[29].main.temp_max + '°F');
+            var temp5 = (res.list[37].main.temp_max + '°F');
+
+            var humid1 = ('Humidity ' + res.list[5].main.humidity + '%');
+            var humid2 = ('Humidity ' + res.list[13].main.humidity + '%');
+            var humid3 = ('Humidity ' + res.list[21].main.humidity + '%');
+            var humid4 = ('Humidity ' + res.list[29].main.humidity + '%');
+            var humid5 = ('Humidity ' + res.list[37].main.humidity + '%');
+
+            var wind1 = ('Wind Speed ' + res.list[5].wind.speed + 'Mph')
+            var wind2 = ('Wind Speed ' + res.list[13].wind.speed + 'Mph')
+            var wind3 = ('Wind Speed ' + res.list[21].wind.speed + 'Mph')
+            var wind4 = ('Wind Speed ' + res.list[29].wind.speed + 'Mph')
+            var wind5 = ('Wind Speed ' + res.list[37].wind.speed + 'Mph')
+            // var windSpeed = (res.wind.speed);
+            // console.log(tempDay1);
+            var icon1 = res.list[6].weather[0].icon;
+            var icon2 = res.list[14].weather[0].icon;
+            var icon3 = res.list[22].weather[0].icon;
+            var icon4 = res.list[30].weather[0].icon;
+            var icon5 = res.list[38].weather[0].icon;
+
+            var weatherIcon1 = "http://openweathermap.org/img/wn/" + icon1 + "@2x.png"
+            var weatherIcon2 = "http://openweathermap.org/img/wn/" + icon2 + "@2x.png"
+            var weatherIcon3 = "http://openweathermap.org/img/wn/" + icon3 + "@2x.png"
+            var weatherIcon4 = "http://openweathermap.org/img/wn/" + icon4 + "@2x.png"
+            var weatherIcon5 = "http://openweathermap.org/img/wn/" + icon5 + "@2x.png"
+
+
+            console.log(res);
+            var lon = (res.city.coord.lon);
+            var lat = (res.city.coord.lat);
+            var queryURL = "http://api.openweathermap.org/data/2.5/uvi?appid=44c38455c07369969dfcf31cc60c6f41&lat=" + lat + "&lon=" + lon;
+            $.ajax({
+                url: queryURL,
+                method: "GET"
+            }).then(function (response) {
+                console.log(response.value);
+                console.log(res);
+                $(document).on('click', '.sizeButton', function () {
+                    var city = $(this).text();
+                    console.log(city);
+                    // var date1 = (res.list[5].dt_txt).split("-").join("/");
+                    var temp = (res.list[5].main.temp_max + ' °F');
+                    var humid = ('Humidity ' + res.list[5].main.humidity + ' %');
+                    var wind = ('Wind Speed ' + res.list[5].wind.speed + ' Mph')
+                    var weatherIcon = res.list[6].weather[0].icon;
+                    var uv = (response.value);
+                    var weatherIcon = "http://openweathermap.org/img/wn/" + icon1 + "@2x.png"
+                    function appendCurrent() {
+                        $("#currentDisplay").empty();
+
+                        $("#currentDisplay").append("<h1 class='currentDate'>" + "Today : " + city + "</h1>");
+                        $("#currentDisplay").append("<img class='currentImg' src='" + weatherIcon + "'>");
+                        $("#currentDisplay").append("<p class='currentTemp'>" + "Current Temperature : " + temp + "</p>");
+                        $("#currentDisplay").append("<p class='currentHumid'>" + "Current Humidity : " + humid + "</p>");
+                        $("#currentDisplay").append("<p class='currentWind'>" + "Current Wind Speed : " + wind + "</p>");
+                        $("#currentDisplay").append("<p class='currentUv'>" + "UV Index : " + uv + "</p>");
+                    }
+                    appendCurrent();
+                })
+
+
+
+
+
+
+            })
+
+            function appendTest() {
+                $("#appendHere").empty();
+
+                $("#appendHere").append("<h1 class='changeMeDate'>" + date1 + "</h1>");
+                $("#appendHere").append("<img class='imgChange' src='" + weatherIcon1 + "'>");
+                $("#appendHere").append("<p class='changeMe1'>" + temp1 + "</p>");
+                $("#appendHere").append("<p class='changeMe1'>" + humid1 + "</p>");
+                $("#appendHere").append("<p class='changeMe1'>" + wind1 + "</p>");
+            }
+            function appendTest1() {
+                $("#appendHere1").empty();
+
+                $("#appendHere1").append("<h1 class='changeMeDate'>" + date2 + "</h1>");
+                $("#appendHere1").append("<img class='imgChange' src='" + weatherIcon2 + "'>");
+                $("#appendHere1").append("<p class='changeMe1'>" + temp2 + "</p>");
+                $("#appendHere1").append("<p class='changeMe1'>" + humid2 + "</p>");
+                $("#appendHere1").append("<p class='changeMe1'>" + wind2 + "</p>");
+
+            }
+            function appendTest2() {
+                $("#appendHere2").empty();
+
+                $("#appendHere2").append("<h1 class='changeMeDate'>" + date3 + "</h1>");
+                $("#appendHere2").append("<img class='imgChange' src='" + weatherIcon3 + "'>");
+                $("#appendHere2").append("<p class='changeMe1'>" + temp3 + "</p>");
+                $("#appendHere2").append("<p class='changeMe1'>" + humid3 + "</p>");
+                $("#appendHere2").append("<p class='changeMe1'>" + wind3 + "</p>");
+
+            }
+            function appendTest3() {
+                $("#appendHere3").empty();
+
+                $("#appendHere3").append("<h1 class='changeMeDate'>" + date4 + "</h1>");
+                $("#appendHere3").append("<img class='imgChange' src='" + weatherIcon4 + "'>");
+                $("#appendHere3").append("<p class='changeMe1'>" + temp4 + "</p>");
+                $("#appendHere3").append("<p class='changeMe1'>" + humid4 + "</p>");
+                $("#appendHere3").append("<p class='changeMe1'>" + wind4 + "</p>");
+
+            }
+            function appendTest4() {
+                $("#appendHere4").empty();
+
+                $("#appendHere4").append("<h1 class='changeMeDate'>" + date5 + "</h1>");
+                $("#appendHere4").append("<img class='imgChange' src='" + weatherIcon5 + "'>");
+                $("#appendHere4").append("<p class='changeMe1'>" + temp5 + "</p>");
+                $("#appendHere4").append("<p class='changeMe1'>" + humid5 + "</p>");
+                $("#appendHere4").append("<p class='changeMe1'>" + wind5 + "</p>");
+
+            }
+
+
+            appendTest();
+            appendTest1();
+            appendTest2();
+            appendTest3();
+            appendTest4();
+
+
+        });
+
+    });
+
     /////
     /////      /////////
     ///////               ///////////
     ///////                         /////////
     ///////                                 /////////
     ////// THE ON CLICK OR ENTER BUTTON FUNCTIONS  /////
+
 
 
 

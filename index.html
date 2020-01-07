@@ -12,7 +12,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <style>
         body {
-            background: url(https://www.elcinfosec.com/wp-content/uploads/dark-patterns.jpg)no-repeat center center fixed;
+            background: url(https://images.pexels.com/photos/129733/pexels-photo-129733.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260)no-repeat center center fixed;
             -webkit-background-size: cover;
             -moz-background-size: cover;
             -o-background-size: cover;
@@ -30,8 +30,11 @@
         <input class="form-control searchbar" type="text" placeholder="Please search a city" aria-label="Search"
             id="searchBar">
         <button class="btn srchBtn" id="srchBtn" type="submit">Search</button>
-        <div class="searchHistory">
-            
+        <div id="currentDisplay">
+
+        </div>
+        <div class="searchHistory" id="searchHistory">
+            <h3 id="history">History</h3>
         </div>
         <div class="holder">
             <div class="container weatherBox" id="appendHere">

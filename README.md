@@ -1,6 +1,7 @@
 # Week6-WeatherDashboard
 <h2>Topics of Discussion</h2>
 <p>For some reason when I run the app on my computer current weather is appended, however when ran on github it does not....</p>
+<p>Looked up the error inside console... and its because the call is not coming from an https... so I'm not entirely sure how to fix this</p>
 <p>My one million lines of javascript code</p>
 <h2>Prerequisites</h2>
 <ul>
